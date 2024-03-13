@@ -352,22 +352,22 @@ date_range = pd.date_range(start=start_date, end=end_date, freq='H')
 
 # functions to save data and rename columns, get from renewables ninja
 def save_as_csv(df, region):
-    df.rename(columns={"electricity": region}, inplace=True)
-    df[region] = df[region].round(3)
+    df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
+    #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
     filename = f"capacity_factors_2011_wind_{region}.csv"
     df.to_csv(f"timeseries/wind/{filename}", index=False)
 
 def save_as_csv_pv(df, region):
-    df.rename(columns={"electricity": region}, inplace=True)
-    df[region] = df[region].round(3)
+    df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
+    #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
     filename = f"capacity_factors_2011_pv_{region}.csv"
     df.to_csv(f"timeseries/pv/{filename}", index=False)
 
 def save_as_csv_future(df, region):
-    df.rename(columns={"electricity": region}, inplace=True)
-    df[region] = df[region].round(3)
+    df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
+    #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
     filename = f"capacity_factors_2011_future_{region}.csv"
     df.to_csv(f"timeseries/wind_future/{filename}", index=False)
@@ -609,10 +609,17 @@ timeseries_wind_future = pd.concat(dfs, axis=1)
 
 # --------------------------------------------------------------------------------------------------------------------->
 
+# full load  hours
 full_load_hours_wind = timeseries_wind.sum()
 full_load_hours_pv = timeseries_pv.sum()
+
+# standardize on installed capacity
+timeseries_wind_2 = timeseries_wind/timeseries_wind.sum()
+timeseries_pv_2 = timeseries_pv/timeseries_pv.sum()
+timeseries_wind_future_2 = timeseries_wind_future/timeseries_wind_future.sum()
+
 # export data as .csv
 
-timeseries_wind.to_csv("timeseries/wind_feedin_timeseries.csv")
-timeseries_pv.to_csv("timeseries/pv_feedin_timeseries.csv")
-timeseries_wind_future.to_csv("timeseries/wind_future_feedin_timeseries.csv")
+timeseries_wind_2.to_csv("timeseries/wind_feedin_timeseries.csv")
+timeseries_pv_2.to_csv("timeseries/pv_feedin_timeseries.csv")
+timeseries_wind_future_2.to_csv("timeseries/wind_future_feedin_timeseries.csv")
