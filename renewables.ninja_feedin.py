@@ -610,7 +610,7 @@ timeseries_wind_future = pd.concat(dfs, axis=1)
 # --------------------------------------------------------------------------------------------------------------------->
 
 full_load_hours_wind = timeseries_wind.sum()
-
+full_load_hours_pv = timeseries_pv.sum()
 # export data as .csv
 
 timeseries_wind.to_csv("timeseries/wind_feedin_timeseries.csv")
