@@ -613,13 +613,19 @@ timeseries_wind_future = pd.concat(dfs, axis=1)
 full_load_hours_wind = timeseries_wind.sum()
 full_load_hours_pv = timeseries_pv.sum()
 
-# standardize on installed capacity
-timeseries_wind_2 = timeseries_wind/timeseries_wind.sum()
-timeseries_pv_2 = timeseries_pv/timeseries_pv.sum()
-timeseries_wind_future_2 = timeseries_wind_future/timeseries_wind_future.sum()
 
+# standardize on installed capacity
+timeseries_wind_normed = timeseries_wind/timeseries_wind.sum()
+timeseries_pv_normed = timeseries_pv/timeseries_pv.sum()
+timeseries_wind_future_normed = timeseries_wind_future/timeseries_wind_future.sum()
+
+# timeseries_wind and timeseries_wind_future are very similar
+difference = timeseries_wind - timeseries_wind_future
+# print(difference.describe())
+# timeseries_wind_future set for wind_feedin_timeseries.csv
 # export data as .csv
 
-timeseries_wind_2.to_csv("timeseries/wind_feedin_timeseries.csv")
-timeseries_pv_2.to_csv("timeseries/pv_feedin_timeseries.csv")
-timeseries_wind_future_2.to_csv("timeseries/wind_future_feedin_timeseries.csv")
+# timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
+timeseries_pv_normed.to_csv("timeseries/pv_feedin_timeseries.csv")
+timeseries_pv_normed.to_csv("timeseries/st_feedin_timeseries.csv")
+timeseries_wind_future_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
