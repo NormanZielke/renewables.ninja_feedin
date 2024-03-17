@@ -623,8 +623,8 @@ timeseries_wind_future_normed = timeseries_wind_future/timeseries_wind_future.su
 difference = timeseries_wind - timeseries_wind_future
 # print(difference.describe())
 # timeseries_wind_future set for wind_feedin_timeseries.csv
-# export data as .csv
 
+# export data as .csv
 # timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/pv_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/st_feedin_timeseries.csv")
