@@ -342,7 +342,7 @@ y = df_ninja_onshore.loc[1, "Anzahl_Typ2"]
 z = x+y
 
 # --------------------------------------------------------------------------------------------------------------------->
-
+import pickle
 # prepare functions to save timeseries of the regions
 
 gemeindeschluessel = {
@@ -356,6 +356,12 @@ gemeindeschluessel = {
     "Kiel": "01002000",
     "Zwickau": "14524330",
 }
+
+# gemeindeschluessel save as dict in file
+with open("gemeindeschluessel.pkl", "wb") as datei:
+    pickle.dump(gemeindeschluessel, datei)
+
+print("Das Dictionary wurde erfolgreich gespeichert.")
 
 global date_range
 start_date = "2011-01-01 00:00:00"

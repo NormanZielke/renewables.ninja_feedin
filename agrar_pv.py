@@ -95,9 +95,11 @@ df_agrar_pv = bifazial()
 
 agrar_pv = df_agrar_pv
 
-agrar_pv_normed = agrar_pv/agrar_pv.sum()
+import pickle
 
-timeseries_wind_normed = timeseries_wind/timeseries_wind.sum()
+with open("gemeindeschluessel.pkl", "rb") as datei:
+    gemeindeschluessel = pickle.load(datei)
+
 
 def save_as_csv_agrar_pv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
