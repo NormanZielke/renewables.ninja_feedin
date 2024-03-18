@@ -1,0 +1,28 @@
+,centerposition
+ruedersorf_bei_berlin,"<GeometryArray>
+[<POINT (13.826 52.481)>]
+Length: 1, dtype: geometry"
+strausberg,"<GeometryArray>
+[<POINT (13.9 52.567)>]
+Length: 1, dtype: geometry"
+erkner,"<GeometryArray>
+[<POINT (13.764 52.412)>]
+Length: 1, dtype: geometry"
+gruenheide_mark,"<GeometryArray>
+[<POINT (13.895 52.418)>]
+Length: 1, dtype: geometry"
+kiel,"<GeometryArray>
+[<POINT (10.132 54.325)>]
+Length: 1, dtype: geometry"
+ingolstadt,"<GeometryArray>
+[<POINT (11.395 48.755)>]
+Length: 1, dtype: geometry"
+kassel,"<GeometryArray>
+[<POINT (9.46 51.311)>]
+Length: 1, dtype: geometry"
+bocholt,"<GeometryArray>
+[<POINT (6.601 51.853)>]
+Length: 1, dtype: geometry"
+zwickau,"<GeometryArray>
+[<POINT (12.481 50.728)>]
+Length: 1, dtype: geometry"
