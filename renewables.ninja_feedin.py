@@ -257,7 +257,7 @@ def change_wpt_pv(position, system_loss):
         'capacity': 1000,
         'system_loss': 0.1,
         'tracking': 0,
-        'tilt': 35,
+        'tilt': 30,
         'azim': 180,
         'format': 'json',
         'local_time': 'true',
