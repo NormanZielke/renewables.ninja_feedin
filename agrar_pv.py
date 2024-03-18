@@ -5,6 +5,14 @@ import time
 
 # for agrar - pv center_position centerposition of "Rüdersdorf bei Berlin" is used
 
+# get dict "gemeindeschluessel"
+import pickle
+
+with open("gemeindeschluessel.pkl", "rb") as datei:
+    gemeindeschluessel = pickle.load(datei)
+
+region = "Rüdersdorf bei Berlin"
+
 def get_pv_data(args):
     """
     Abfragenlimits: 6/minute und 50/h!
@@ -95,16 +103,9 @@ df_agrar_pv = bifazial()
 
 agrar_pv = df_agrar_pv
 
-import pickle
-
-with open("gemeindeschluessel.pkl", "rb") as datei:
-    gemeindeschluessel = pickle.load(datei)
-
-
 def save_as_csv_agrar_pv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
-    #df[region] = df[region].round(3)
-    #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
-    filename = f"capacity_factors_2011_agrar_pv_{region}.csv"
-    df.to_csv(f"timeseries/pv/{filename}", index=False)
+    filename = f"timeseries_agrar_pv_{region}.csv"
+    df.to_csv(f"timeseries/agrar_pv/{filename}", index=False)
 
+save_as_csv_agrar_pv(agrar_pv, region)
