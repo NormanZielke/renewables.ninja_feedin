@@ -1,10 +1,10 @@
-Region;Gemeindeschluessel
-Rdersdorf bei Berlin;12064428
-Strausberg;12064472
-Erkner;12067124
-Grnheide (Mark);12067201
-Ingolstadt;9161000
-Kassel;6611000
-Bocholt;5554008
-Kiel;1002000
-Zwickau;14524330
+region;gemeindeschluessel
+ruedersdorf_bei_berlin;12064428
+strausberg;12064472
+erkner;12067124
+gruenheide_(mark);12067201
+ingolstadt;09161000
+kassel;06611000
+bocholt;05554008
+kiel;01002000
+zwickau;14524330

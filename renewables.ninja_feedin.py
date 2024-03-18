@@ -7,12 +7,18 @@ import cartopy
 import cartopy.crs as ccrs
 
 # --------------------------------------------------------------------------------------------------------------------->
-# POSITIONS
+# CENTER - POSITIONS
+
 # load dataset for Municipalities in germany
 gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
 
+# INPUT: choose regions by array
 regions = ["Rüdersdorf bei Berlin", "Strausberg", "Erkner", "Grünheide (Mark)",
            "Kiel", "Ingolstadt", "Kassel", "Bocholt", "Zwickau"]
+
+# for readability as .csv -> regions in UTF-8 Format
+regions_UTF_8 = ["ruedersorf_bei_berlin","strausberg","erkner","gruenheide_mark",
+                 "kiel","ingolstadt","kassel","bocholt","zwickau"]
 
 def get_position(gdf,region):
     df = gpd.read_file(gdf)
@@ -25,12 +31,21 @@ center_positions = []
 for region in regions:
     center_positions.append(get_position(gdf,region))
 
+# save center_positions for agrar_pv.py
+
+data = {"centerposition": center_positions
+}
+df_center_positions = pd.DataFrame(data, index=regions_UTF_8)
+df_center_positions.to_csv("center_positions.csv")
 # --------------------------------------------------------------------------------------------------------------------->
-# Check dataset for consistency
 
 # load data of wind turbines from MaStr
 wind_data = pd.read_csv("bnetza_mastr_wind_raw.csv",
                         sep=",")
+
+# --------------------------------------------------------------------------------------------------------------------->
+# Check dataset for consistency
+
 
 nan_rows_Gemeinde = wind_data[wind_data.Gemeinde.isna()]
 nan_rows_Gemeindeschluessel = wind_data[wind_data.Gemeindeschluessel.isna()]
