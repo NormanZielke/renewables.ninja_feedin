@@ -1,6 +1,7 @@
 import json
 import requests
 import pandas as pd
+import geopandas as gpd
 import time
 
 # for agrar - pv center_position centerposition of "Rüdersdorf bei Berlin" is used
@@ -109,3 +110,13 @@ def save_as_csv_agrar_pv(df, region):
     df.to_csv(f"timeseries/agrar_pv/{filename}", index=False)
 
 save_as_csv_agrar_pv(agrar_pv, region)
+
+'''
+Work in progress to get positons which are calculated in renewables.ninja_feedin.py
+coordinates = gpd.read_file('center_positions.csv',index_col=0)
+
+
+df_ninja.loc["Zwickau","centerposition"][0].coords[0]
+
+coordinates.loc["zwickau","centerposition"][0].coords[0]
+'''

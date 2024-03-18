@@ -373,21 +373,21 @@ def save_as_csv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
-    filename = f"capacity_factors_2011_wind_{region}.csv"
+    filename = f"timeseries_wind_{region}.csv"
     df.to_csv(f"timeseries/wind/{filename}", index=False)
 
 def save_as_csv_pv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
-    filename = f"capacity_factors_2011_pv_{region}.csv"
+    filename = f"timeseries_pv_{region}.csv"
     df.to_csv(f"timeseries/pv/{filename}", index=False)
 
 def save_as_csv_future(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     #df[region] = df[region].round(3)
     #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
-    filename = f"capacity_factors_2011_future_{region}.csv"
+    filename = f"timeseries_future_{region}.csv"
     df.to_csv(f"timeseries/wind_future/{filename}", index=False)
 
 # --------------------------------------------------------------------------------------------------------------------->
@@ -589,21 +589,21 @@ for region in regions:
 
 dfs = []
 for region in regions:
-    dfs.append(pd.read_csv(f"timeseries/wind/capacity_factors_2011_wind_{region}.csv",
+    dfs.append(pd.read_csv(f"timeseries/wind/timeseries_wind_{region}.csv",
                  parse_dates=True, index_col=0))
 
 timeseries_wind = pd.concat(dfs, axis=1)
 
 dfs = []
 for region in regions:
-    dfs.append(pd.read_csv(f"timeseries/pv/capacity_factors_2011_pv_{region}.csv",
+    dfs.append(pd.read_csv(f"timeseries/pv/timeseries_pv_{region}.csv",
                  parse_dates=True, index_col=0))
 
 timeseries_pv = pd.concat(dfs, axis=1)
 
 dfs = []
 for region in regions:
-    dfs.append(pd.read_csv(f"timeseries/wind_future/capacity_factors_2011_future_{region}.csv",
+    dfs.append(pd.read_csv(f"timeseries/wind_future/timeseries_future_{region}.csv",
                  parse_dates=True, index_col=0))
 
 timeseries_wind_future = pd.concat(dfs, axis=1)
