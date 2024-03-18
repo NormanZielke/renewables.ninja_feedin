@@ -1,7 +1,4 @@
-import os.path
-import math as m
 import pandas as pd
-import numpy as np
 from matplotlib import pyplot as plt
 plt.style.use("seaborn-v0_8")
 
@@ -206,7 +203,7 @@ import requests
 #wind data
 
 # function to change input values for get_df() - function
-def change_wpt(position, capacity, height, turbine):
+def change_wpt(position, height, turbine):
     args = {
         'lat': 51.8000,  # 51.5000-52.0000
         'lon': 12.2000,  # 11.8000-13.1500
@@ -220,7 +217,7 @@ def change_wpt(position, capacity, height, turbine):
         'raw': 'false',
     }
 
-    args['capacity'] = capacity
+#    args['capacity'] = capacity
     args['height'] = height
     args['lat'] = position[1]
     args['lon'] = position[0]
@@ -250,14 +247,14 @@ def get_df(args):
 
 # pv data
 
-def change_wpt_pv(position, capacity, system_loss):
+def change_wpt_pv(position, system_loss):
     args = {
         'lat': 34.125,
         'lon': 39.814,
         'date_from': '2011-01-01',
         'date_to': '2011-12-31',
         'dataset': 'merra2',
-        'capacity': 1.0,
+        'capacity': 1000,
         'system_loss': 0.1,
         'tracking': 0,
         'tilt': 35,
@@ -267,7 +264,7 @@ def change_wpt_pv(position, capacity, system_loss):
         'raw': 'false',
     }
 
-    args['capacity'] = capacity
+#    args['capacity'] = capacity
     args['system_loss'] = system_loss
     args['lat'] = position[1]
     args['lon'] = position[0]
@@ -383,7 +380,6 @@ def save_as_csv_future(df, region):
 
 df_Rued_wind = get_df(change_wpt(
     position=df_ninja.loc["Rüdersdorf bei Berlin","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja.loc["Rüdersdorf bei Berlin","Nabenhoehe"],
     turbine="GE 1.5sl")
 )
@@ -395,14 +391,12 @@ save_as_csv(df_Rued_wind,"Rüdersdorf bei Berlin")
 
 df_Straus_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Strausberg","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Enercon E70 2300")
 )
 
 df_Straus_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Strausberg","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Vestas V90 2000")
 )
@@ -417,14 +411,12 @@ save_as_csv(df_Straus_wind,"Strausberg")
 
 df_Erkner_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Erkner","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Enercon E70 2300")
 )
 
 df_Erkner_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Erkner","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Vestas V90 2000")
 )
@@ -439,14 +431,12 @@ save_as_csv(df_Erkner_wind,"Erkner")
 
 df_Grünh_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Grünheide (Mark)","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Enercon E70 2300")
 )
 
 df_Grünh_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Grünheide (Mark)","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Vestas V90 2000")
 )
@@ -462,14 +452,12 @@ save_as_csv(df_Grünh_wind,"Grünheide (Mark)")
 
 df_Kiel_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Kiel","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Enercon E70 2300")
 )
 
 df_Kiel_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Kiel","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Vestas V90 2000")
 )
@@ -484,14 +472,12 @@ save_as_csv(df_Kiel_wind,"Kiel")
 
 df_Ingolstadt_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Ingolstadt","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Enercon E70 2300")
 )
 
 df_Ingolstadt_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Ingolstadt","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja_onshore.loc[1, "Nabenhoehe"],
     turbine="Vestas V90 2000")
 )
@@ -508,7 +494,6 @@ save_as_csv(df_Ingolstadt_wind,"Ingolstadt")
 
 df_Kassel_wind = get_df(change_wpt(
     position=df_ninja.loc["Kassel","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja.loc["Kassel","Nabenhoehe"],
     turbine="Vestas V112 3000")
 )
@@ -524,14 +509,12 @@ save_as_csv(df_Kassel_wind,"Kassel")
 
 df_Bocholt_wind_type1 = get_df(change_wpt(
     position=df_ninja.loc["Bocholt","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja.loc["Bocholt","Nabenhoehe"],
     turbine="Enercon E82 2300")
 )
 
 df_Bocholt_wind_type2 = get_df(change_wpt(
     position=df_ninja.loc["Bocholt","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja.loc["Bocholt","Nabenhoehe"],
     turbine="Nordex N60 1300")
 )
@@ -550,7 +533,6 @@ save_as_csv(df_Bocholt_wind,"Bocholt")
 
 df_Zwickau_wind = get_df(change_wpt(
     position=df_ninja.loc["Zwickau","centerposition"][0].coords[0],
-    capacity=1,
     height=df_ninja.loc["Zwickau","Nabenhoehe"],
     turbine="Vestas V150 4000")
 )
@@ -564,7 +546,6 @@ save_as_csv(df_Zwickau_wind,"Zwickau")
 for region in regions:
     df = get_df_pv(change_wpt_pv(
     position=df_ninja.loc[region,"centerposition"][0].coords[0],
-    capacity=1,
     system_loss=0.1)
     )
     save_as_csv_pv(df, region)
@@ -576,7 +557,6 @@ for region in regions:
 for region in regions:
     df = get_df(change_wpt(
     position=df_ninja.loc[region,"centerposition"][0].coords[0],
-    capacity=1,
     height=126,
     turbine="Enercon E126 6500")
     )
@@ -610,8 +590,8 @@ timeseries_wind_future = pd.concat(dfs, axis=1)
 # --------------------------------------------------------------------------------------------------------------------->
 
 # full load  hours
-full_load_hours_wind = timeseries_wind.sum()
-full_load_hours_pv = timeseries_pv.sum()
+full_load_hours_wind = timeseries_wind.sum()/1000
+full_load_hours_pv = timeseries_pv.sum()/1000
 
 
 # standardize on installed capacity
@@ -620,7 +600,7 @@ timeseries_pv_normed = timeseries_pv/timeseries_pv.sum()
 timeseries_wind_future_normed = timeseries_wind_future/timeseries_wind_future.sum()
 
 # timeseries_wind and timeseries_wind_future are very similar
-difference = timeseries_wind - timeseries_wind_future
+difference_wind = timeseries_wind - timeseries_wind_future
 # print(difference.describe())
 # timeseries_wind_future set for wind_feedin_timeseries.csv
 
