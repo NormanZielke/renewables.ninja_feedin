@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import time
 
-
+# for agrar - pv center_position centerposition of "Rüdersdorf bei Berlin" is used
 
 def get_pv_data(args):
     """
@@ -35,7 +35,7 @@ def get_pv_data(args):
 
     return data
 
-def change_anlage(lat=52.34714000, lon=14.55062000, capacity=1000.0, system_loss=0.1, tilt=30, azim=180):
+def change_anlage(lat=52.48099500944645, lon=13.826385135448774, capacity=1000.0, system_loss=0.1, tilt=30, azim=180):
     args = {
         'lat': 52.34714000,  #Frankfurt Oder
         'lon': 14.55062000,  #Frankfurt Oder
@@ -90,3 +90,19 @@ def bifazial():
 
 
     return pv_df
+
+df_agrar_pv = bifazial()
+
+agrar_pv = df_agrar_pv
+
+agrar_pv_normed = agrar_pv/agrar_pv.sum()
+
+timeseries_wind_normed = timeseries_wind/timeseries_wind.sum()
+
+def save_as_csv_agrar_pv(df, region):
+    df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
+    #df[region] = df[region].round(3)
+    #df.insert(1, "ags_id", np.full(len(date_range), gemeindeschluessel[region]))
+    filename = f"capacity_factors_2011_agrar_pv_{region}.csv"
+    df.to_csv(f"timeseries/pv/{filename}", index=False)
+
