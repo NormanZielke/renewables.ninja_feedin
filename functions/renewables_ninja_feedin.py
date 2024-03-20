@@ -4,7 +4,7 @@ import json
 import requests
 
 """
-  Abfragenlimits: 50/h!
+  limit of requests: 50/h!
 
   please use your own token
   https://www.renewables.ninja/register

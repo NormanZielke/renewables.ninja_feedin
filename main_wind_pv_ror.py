@@ -1,8 +1,7 @@
 import pandas as pd
-
+import numpy as np
 # import functions
 from functions.functions import get_position, save_as_csv, save_as_csv_pv
-
 from functions.renewables_ninja_feedin import change_wpt, get_df, change_wpt_pv, get_df_pv
 
 # --------------------------------------------------------------------------------------------------------------------->
@@ -11,8 +10,6 @@ from functions.renewables_ninja_feedin import change_wpt, get_df, change_wpt_pv,
 # INPUT: choose regions by array
 regions = ["Rüdersdorf bei Berlin", "Strausberg", "Erkner", "Grünheide (Mark)",
            "Kiel", "Ingolstadt", "Kassel", "Bocholt", "Zwickau"]
-
-import pickle
 
 gemeindeschluessel = {
     "Rüdersdorf bei Berlin": "12064428",
@@ -25,6 +22,8 @@ gemeindeschluessel = {
     "Kiel": "01002000",
     "Zwickau": "14524330",
 }
+
+import pickle
 
 # dict gemeindeschluessel save as file
 with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
@@ -58,8 +57,6 @@ for region in regions:
     )
     save_as_csv(df, region)
 
-# --------------------------------------------------------------------------------------------------------------------->
-
 # --> collect data for pv_feedin_timeseries.csv
 
 for region in regions:
@@ -89,6 +86,8 @@ timeseries_pv = pd.concat(dfs, axis=1)
 
 # --------------------------------------------------------------------------------------------------------------------->
 
+# calculate normed timeseries for wind and pv
+
 # full load  hours
 full_load_hours_wind = timeseries_wind.sum()/1000
 full_load_hours_pv = timeseries_pv.sum()/1000
@@ -97,8 +96,33 @@ full_load_hours_pv = timeseries_pv.sum()/1000
 timeseries_wind_normed = timeseries_wind/timeseries_wind.sum()
 timeseries_pv_normed = timeseries_pv/timeseries_pv.sum()
 
+# --------------------------------------------------------------------------------------------------------------------->
+
+# --> collect data for ror_feedin_timeseries.csv
+"""
+Assumptions:
+    - constant power flow
+    - full load hours = 3800
+        -> one ror_feedin_timeseries.csv for all regions
+"""
+# full_load_hours_ror = 3800
+
+ror_dispatch_normed = 1/8760
+
+global date_range
+start_date = "2011-01-01 00:00:00"
+end_date = "2011-12-31 23:00:00"
+date_range = pd.date_range(start=start_date, end=end_date, freq='H')
+
+data = {"power": np.full(len(date_range),ror_dispatch_normed)
+}
+timeseries_ror_normed = pd.DataFrame(data,index=date_range)
+
+# --------------------------------------------------------------------------------------------------------------------->
+
 # export data as .csv
 # timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/pv_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/st_feedin_timeseries.csv")
 timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
+timeseries_ror_normed.to_csv("timeseries/ror_feedin_timeseries.csv")
