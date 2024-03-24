@@ -12,11 +12,19 @@ import pickle
 with open("gemeindeschluessel.pkl", "rb") as datei:
     gemeindeschluessel = pickle.load(datei)
 
-region = "Rüdersdorf bei Berlin"
+region = "ruedersorf_bei_berlin"
+
+
+df_positions = pd.read_csv(r"center_positions.csv",
+                           index_col = 0, sep=",")
+
+df_positions.loc[region,"centerposition"][0].coords[0]
+
+
 
 def get_pv_data(args):
     """
-    Abfragenlimits: 6/minute und 50/h!
+    Abfragenlimits: 50/h!
 
     bitte mein Token austauschen
     https://www.renewables.ninja/register
@@ -111,12 +119,3 @@ def save_as_csv_agrar_pv(df, region):
 
 save_as_csv_agrar_pv(agrar_pv, region)
 
-'''
-Work in progress to get positons which are calculated in renewables.ninja_feedin.py
-coordinates = gpd.read_file('center_positions.csv',index_col=0)
-
-
-df_ninja.loc["Zwickau","centerposition"][0].coords[0]
-
-coordinates.loc["zwickau","centerposition"][0].coords[0]
-'''

@@ -45,6 +45,19 @@ data = { "centerposition": center_positions
 }
 df_ninja = pd.DataFrame(data, index=regions)
 
+# save centerpositions in dataframe as input data for renewables.ninja retrieval
+
+positions = []
+keys = []
+for region, ags_id in gemeindeschluessel.items():
+    positions.append(get_position(gdf,region)[0].coords[0])
+    keys.append(ags_id)
+
+data = { "centerposition": positions
+}
+df_positions = pd.DataFrame(data, index=keys)
+df_positions.to_csv("center_positions.csv")
+
 # --------------------------------------------------------------------------------------------------------------------->
 
 # --> collect data for wind_feedin_timeseries.csv
