@@ -23,6 +23,7 @@ gemeindeschluessel = {
     "Zwickau": "14524330",
 }
 
+
 import pickle
 
 # dict gemeindeschluessel save as file
@@ -48,15 +49,20 @@ df_ninja = pd.DataFrame(data, index=regions)
 # save centerpositions in dataframe as input data for renewables.ninja retrieval
 
 positions = []
-keys = []
+ags_id_list = []
+regions = []
 for region, ags_id in gemeindeschluessel.items():
     positions.append(get_position(gdf,region)[0].coords[0])
-    keys.append(ags_id)
+    ags_id_list.append(ags_id)
+    regions.append(region)
 
-data = { "centerposition": positions
+#"ags_id": ags_id_list,
+
+data = { "ags_id": ags_id_list,
+    "centerposition": positions
 }
-df_positions = pd.DataFrame(data, index=keys)
-df_positions.to_csv("center_positions.csv")
+df_positions = pd.DataFrame(data)
+df_positions.to_csv("center_positions.csv", sep=";",index= False)
 
 # --------------------------------------------------------------------------------------------------------------------->
 

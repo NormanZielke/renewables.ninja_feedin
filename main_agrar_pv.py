@@ -1,10 +1,12 @@
 import json
 import requests
 import pandas as pd
-import geopandas as gpd
 import time
 
-# for agrar - pv center_position centerposition of "Rüdersdorf bei Berlin" is used
+"""
+Create argar_pv timeseries for the regions in Brandenburg and five cities, which are
+considererd in SLE-Project
+"""
 
 # get dict "gemeindeschluessel"
 import pickle
@@ -12,15 +14,18 @@ import pickle
 with open("gemeindeschluessel.pkl", "rb") as datei:
     gemeindeschluessel = pickle.load(datei)
 
-region = "ruedersorf_bei_berlin"
+# read in calculated centerpositions
+df_positions = pd.read_csv("center_positions.csv",
+                           index_col=0, sep=";", dtype={"ags_id": str})
 
+df_positions.insert(0, "region", gemeindeschluessel.keys())
 
-df_positions = pd.read_csv(r"center_positions.csv",
-                           index_col = 0, sep=",")
+# in SLE-Project, for regions in Brandenburg, choose one timeseries because they differ only marginally
+# cut out this line of code, if you choose your own regions and summary of regions is not necessary
+df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
 
-df_positions.loc[region,"centerposition"][0].coords[0]
-
-
+ags_id_list = df_positions.index
+regions = df_positions.loc[:, "region"].values
 
 def get_pv_data(args):
     """
@@ -52,7 +57,7 @@ def get_pv_data(args):
 
     return data
 
-def change_anlage(lat=52.48099500944645, lon=13.826385135448774, capacity=1000.0, system_loss=0.1, tilt=30, azim=180):
+def change_anlage(position, system_loss, tilt, azim):
     args = {
         'lat': 52.34714000,  #Frankfurt Oder
         'lon': 14.55062000,  #Frankfurt Oder
@@ -69,25 +74,30 @@ def change_anlage(lat=52.48099500944645, lon=13.826385135448774, capacity=1000.0
         'raw': 'false'
     }
 
-    args["lat"] = lat
-    args["lon"] = lon
-    args['capacity'] = capacity
+    args['lat'] = position[1]
+    args['lon'] = position[0]
+#    args["lat"] = lat
+#    args["lon"] = lon
+#   args['capacity'] = capacity
     args['system_loss'] = system_loss
     args['tilt'] = tilt
     args['azim'] = azim
 
     return args
 
-
-def bifazial():
+def bifazial(ags_id):
     """
-    erstellt eine Einspeisezeitreihe für bifasziale vertikale Agri-PV für 1MW in Frankfurt (Oder) über renewables.ninja
-    "electricity" output pro Stunde in kW
-
-    NUR 50/36 =  1,4 ANFRAGEN PRO STUNDE
+    creates a feed-in time series for bifascial vertical Agri-PV for 1MW in Frankfurt (Oder) via renewables.ninja
+    "electricity" output per hour in kW
+    limit of requests: 50/h!
+    this function generate 36 requests!
     """
     # getting data from renewables.ninja
-    pv_df = get_pv_data(change_anlage(tilt=90, azim=0))
+    pv_df = get_pv_data(change_anlage(
+        position=df_positions.loc[ags_id,"centerposition"].strip("()").split(", "),
+        system_loss=0.1,
+        tilt=90,
+        azim=0))
     bifaszialitaet = 1
     pv_df["electricity"] *= 1/36 * bifaszialitaet
 
@@ -101,21 +111,32 @@ def bifazial():
         elif 13 < i < 22:  # nordausrichtung, also bifaszialität 0,9
             bifaszialitaet = 0.9
 
-        pv_df_container = get_pv_data(change_anlage(tilt=90, azim=10 * i))
+        pv_df_container = get_pv_data(change_anlage(position=df_positions.loc[ags_id,"centerposition"].strip("()").split(", "),
+                                                    system_loss=0.1,
+                                                    tilt=90,
+                                                    azim=10 * i))
         pv_df_container["electricity"] *= (1 / 36 * bifaszialitaet)
         pv_df["electricity"] += pv_df_container["electricity"]
 
-
     return pv_df
-
-df_agrar_pv = bifazial()
-
-agrar_pv = df_agrar_pv
 
 def save_as_csv_agrar_pv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     filename = f"timeseries_agrar_pv_{region}.csv"
     df.to_csv(f"timeseries/agrar_pv/{filename}", index=False)
 
-save_as_csv_agrar_pv(agrar_pv, region)
+#df_agrar_pv = bifazial(ags_id_list[0])
+
+"""
+request agrar_pv timeseries for all regions
+    - 36 requests per region
+    - 1h brake per agrar_pv timeseries
+"""
+
+for region, ags_id in zip(regions, ags_id_list):
+    df_agrar_pv = bifazial(ags_id)
+    save_as_csv_agrar_pv(df_agrar_pv, region)
+    time.sleep(3600)
+
+#save_as_csv_agrar_pv(df_agrar_pv, region)
 

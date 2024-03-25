@@ -44,3 +44,17 @@ def save_as_csv_pv(df, region):
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     filename = f"timeseries_pv_{region}.csv"
     df.to_csv(f"timeseries/pv/{filename}", index=False)
+
+def save_as_csv_agrar_pv(df, region):
+    """
+    :param df: pandas Dataframe
+    :param region: string
+    :return: .csv
+    """
+    # import dictionary for ags_id's
+    with open("gemeindeschluessel.pkl", "rb") as datei:
+        gemeindeschluessel = pickle.load(datei)
+
+    df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
+    filename = f"timeseries_agrar_pv_{region}.csv"
+    df.to_csv(f"timeseries/agrar_pv/{filename}", index=False)
