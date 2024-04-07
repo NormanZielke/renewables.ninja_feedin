@@ -95,17 +95,16 @@ Es werden 9 Zeitreihen für die oben beschriebene Vergleichsanlage berechnet:
 import json
 import requests
 import pandas as pd
-import geopandas as gpd
 
 def change_wpt(position, height, turbine):
-    
+    """
     function to change input data for wind timeseries from renewables.ninja
     :input:
     :param position: tupel: (lon, lat)
     :param height: dtype: integer/float
     :param turbine: dtype: string
     :return: args
-
+    """
 
     args = {
         'lat': 51.8000,  # 51.5000-52.0000
