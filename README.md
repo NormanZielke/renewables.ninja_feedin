@@ -8,7 +8,7 @@ Auflösung auf Gemeindeebene. Für beide Zeitreihen sind geografische Positionen
 
 #### Position
 
-Hierfür wird der Zentroiden der Gemeinden, ein räumlicher Mittelwert,
+Hierfür wird der Zentroid der Gemeinden, ein räumlicher Mittelwert,
 anhand des Geodatensatzes "VG250" bestimmt. Dieser Geodatensatz enthält die Verwaltungsgrenzen der Gemeinden in Deutschland.
 [VG250](\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101)
 (`DE_VG250.gpkg`):
@@ -77,19 +77,19 @@ type_2 = df[
     "type_name").count().sort_values(by="status", ascending=False)
 ```
 
-Die o.g. Prozedur wird in der main_wind_pv_ror_2.py durchgeführt. 
+Die o.g. Prozedur wird in der "main_wind_pv_ror_2.py" durchgeführt. 
 Analog zum oben beschriebenen Vorgehen wird zusätzlich eine seperate 
-Zuknunftszeitreihe für zukünftige WEA berechnet. Hierbei wird eine Enercon 
-E126 6500 mit einer Nabenhöhe von 159 m angenommen.
+Zuknunftszeitreihe für zukünftige WEA berechnet. 
+Hierbei wird eine Enercon E126 6500 mit einer Nabenhöhe von 159 m angenommen.
+([PV- und Windflächenrechner](https://zenodo.org/record/6794558))
 Da die Zeitreihe sich nur marginal von der obigen Status-quo-Zeitreihe
 unterscheidet, wird letztere sowohl für den Status quo als auch die
-Zukunftsszenarien verwendet.(s. main_wind_pv_ror.py).
+Zukunftsszenarien verwendet."(s. main_wind_pv_ror.py)".
 
-```
 
 ### Raw Data von [renewables.ninja](http://renewables.ninja) API
 
-Es werden zwei Zeitreihen für oben beschriebenen Vergleichsanlagen berechnet:
+Es werden 9 Zeitreihen für die oben beschriebene Vergleichsanlage berechnet:
 
 ```
 import json
@@ -97,7 +97,16 @@ import requests
 import pandas as pd
 import geopandas as gpd
 
-def change_wpt(position, capacity, height, turbine):
+def change_wpt(position, height, turbine):
+    
+    function to change input data for wind timeseries from renewables.ninja
+    :input:
+    :param position: tupel: (lon, lat)
+    :param height: dtype: integer/float
+    :param turbine: dtype: string
+    :return: args
+
+
     args = {
         'lat': 51.8000,  # 51.5000-52.0000
         'lon': 12.2000,  # 11.8000-13.1500
@@ -111,16 +120,21 @@ def change_wpt(position, capacity, height, turbine):
         'raw': 'false',
     }
 
-    args['capacity'] = capacity
     args['height'] = height
-    args['lat'] = position[0]
-    args['lon'] = position[1]
+    args['lat'] = position[1]
+    args['lon'] = position[0]
     args['turbine'] = turbine
 
     return args
 
 def get_df(args):
-    token = 'Please get your own'
+    """
+    function to get wind timeseries from renewables.ninja
+    :param args:
+    :return: timerseries as pandas dataframe
+            "electricity" in kW
+    """
+    token = "087de02f953c486ef9ffe4b9e8093268b0df881c" # please use your own token
     api_base = 'https://www.renewables.ninja/api/'
 
     s = requests.session()
@@ -137,36 +151,17 @@ def get_df(args):
     metadata = parsed_response['metadata']
     return df
 
-enercon_production = get_df(change_wpt(
-    position,
-    capacity=1,
-    height=df[["hub_height"]].mean(),
-    turbine=enercon)
-)
+regions = ["Rüdersdorf bei Berlin","Strausberg","Erkner","Grünheide (Mark)","Ingolstadt","Kassel","Bocholt","Kiel","Zwickau"]
 
-vestas_production = get_df(change_wpt(
-    position,
-    capacity=1000,
-    height=df[["hub_height"]].mean(),
-    turbine=vestas)
-)
+for region in regions:
+    df = get_df(change_wpt(
+    position=df_ninja.loc[region, "centerposition"],
+    height=159,
+    turbine="Enercon E126 6500")
+    )
+    save_as_csv(df, region)
+
 ```
-
-### Gewichtung und Skalierung der Zeitreihen
-
-Um die Charakteristika der beiden o.g. Anlagentypen zu berücksichtigen, erfolgt
-eine gewichtete Summierung der Zeitreihen anhand der berechneten Häufigkeit.
-
-### Zukunftsszenarien
-
-Analog zu dem oben beschriebenen Vorgehen wird eine separate Zeitreihe für
-zukünftige WEA berechnet. Hierbei wird eine Enercon E126 6500 mit einer
-Nabenhöhe von 159 m angenommen
-([PV- und Windflächenrechner](https://zenodo.org/record/6794558)).
-
-Da die Zeitreihe sich nur marginal von der obigen Status-quo-Zeitreihe
-unterscheidet, wird letztere sowohl für den Status quo als auch die
-Zukunftsszenarien verwendet.
 
 * Einspeisezeitreihe: `wind_feedin_timeseries.csv`
 
