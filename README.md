@@ -257,4 +257,107 @@ Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaft
 
 ##### Vorgehen
 \- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert-
-\- Für die Zeitreihe einer Gemeinde werden mehrere Zeitreihen erstellt wobei der Azimut 0° - 360° mit einer Schrittweite von 10° iteriert wird.
+\- Für die Zeitreihe einer Gemeinde werden mehrere Zeitreihen erstellt, wobei der Azimut in einem 
+Bereich von 0° - 360° mit einer Schrittweite von 10° iteriert wird.
+\- Ost-West Panele: Azimut : [50° - 130°, 220° - 310°] -> Erträge * 0.95 wegen Bifaszilaität (\[1\] S.2)
+\- Süd Panele: Azimut : [0° - 40°, 320° - 360°] -> Bifaszilaität = 1 (\[1\] S.2)
+\- Nord Panele: Azimut: [140° - 210°] -> Erträge * 0.9 wegen Bifaszilaität (\[1\] S.2)
+
+#### Quellen
+\[2\] Fraunhofer ISE (2023):Agri-Photovoltaik: Chance für Landwirtschaft und Energiewende, https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/APV-Leitfaden.pdf
+
+```
+def change_anlage(position, system_loss, tilt, azim):
+    args = {
+        'lat': 52.34714000,  #Frankfurt Oder
+        'lon': 14.55062000,  #Frankfurt Oder
+        'date_from': '2011-01-01',
+        'date_to': '2011-12-31',
+        'dataset': 'merra2',
+        'capacity': 1000.0, # ist 1 MW
+        'system_loss': 0.1,
+        'tracking': 0,
+        'tilt': 30,
+        'azim': 180,
+        'format': 'json',
+        'local_time': 'true',
+        'raw': 'false'
+    }
+
+    args['lat'] = position[1]
+    args['lon'] = position[0]
+    args['system_loss'] = system_loss
+    args['tilt'] = tilt
+    args['azim'] = azim
+
+    return args
+
+def get_pv_data(args):
+    """
+    Abfragenlimits: 50/h!
+
+    bitte mein Token austauschen
+    https://www.renewables.ninja/register
+
+    :param args:
+    :return: pandas dataframe
+    "electricity" in kW
+    """
+    token = '087de02f953c486ef9ffe4b9e8093268b0df881c'
+    api_base = 'https://www.renewables.ninja/api/'
+
+    s = requests.session()
+    # Send token header with each request
+    s.headers = {'Authorization': 'Token ' + token}
+
+    url = api_base + 'data/pv'
+
+    r = s.get(url, params=args)
+
+    # Parse JSON to get a pandas.DataFrame of data and dict of metadata
+    parsed_response = json.loads(r.text)
+
+    data = pd.read_json(json.dumps(parsed_response['data']), orient='index')
+    metadata = parsed_response['metadata']
+
+    return data
+
+def bifazial(ags_id):
+    """
+    creates a feed-in time series for bifascial vertical Agri-PV for 1MW in Frankfurt (Oder) via renewables.ninja
+    "electricity" output per hour in kW
+    limit of requests: 50/h!
+    this function generate 36 requests!
+    """
+    # getting data from renewables.ninja
+    pv_df = get_pv_data(change_anlage(
+        position=df_positions.loc[ags_id,"centerposition"].strip("()").split(", "),
+        system_loss=0.1,
+        tilt=90,
+        azim=0))
+    bifaszialitaet = 1
+    pv_df["electricity"] *= 1/36 * bifaszialitaet
+
+
+    for i in range(1,36):
+        time.sleep(1)
+        if 0 < i < 5 or 31 < i < 36: #südausrichtung, also bifaszialität 1
+            bifaszialitaet = 1
+        elif 4 < i < 14 or 21 < i < 32: # west- und ostausrichtung, also bifaszialität 0,95
+            bifaszialitaet = 0.95
+        elif 13 < i < 22:  # nordausrichtung, also bifaszialität 0,9
+            bifaszialitaet = 0.9
+
+        pv_df_container = get_pv_data(change_anlage(position=df_positions.loc[ags_id,"centerposition"].strip("()").split(", "),
+                                                    system_loss=0.1,
+                                                    tilt=90,
+                                                    azim=10 * i))
+        pv_df_container["electricity"] *= (1 / 36 * bifaszialitaet)
+        pv_df["electricity"] += pv_df_container["electricity"]
+
+    return pv_df
+
+df_agrar_pv = bifazial(ags_id)
+```
+
+* Einspeisezeitreihe: `agrar_pv_feedin_timeseries.csv`
