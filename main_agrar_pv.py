@@ -5,7 +5,7 @@ import time
 
 """
 Create argar_pv timeseries for the regions in Brandenburg and five cities, which are
-considererd in SLE-Project
+considered in SLE-Project
 """
 
 # get dict "gemeindeschluessel"
@@ -24,8 +24,11 @@ df_positions.insert(0, "region", gemeindeschluessel.keys())
 # cut out this line of code, if you choose your own regions and summary of regions is not necessary
 df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
 
-ags_id_list = df_positions.index
-regions = df_positions.loc[:, "region"].values
+#ags_id_list = df_positions.index
+#regions = df_positions.loc[:, "region"].values
+ags_id_list = df_positions.index[:2]
+regions = df_positions.loc[:, "region"].values[:2]
+
 
 def get_pv_data(args):
     """
@@ -130,7 +133,7 @@ def save_as_csv_agrar_pv(df, region):
 """
 request agrar_pv timeseries for all regions
     - 36 requests per region
-    - 1h brake per agrar_pv timeseries
+    - 1h brake per agrar_pv timeseries because of request limit
 """
 
 for region, ags_id in zip(regions, ags_id_list):

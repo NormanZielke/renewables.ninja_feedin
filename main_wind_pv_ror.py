@@ -8,21 +8,18 @@ from functions.renewables_ninja_feedin import change_wpt, get_df, change_wpt_pv,
 # INPUT - data
 
 # INPUT: choose regions by array
-regions = ["Rüdersdorf bei Berlin", "Strausberg", "Erkner", "Grünheide (Mark)",
-           "Kiel", "Ingolstadt", "Kassel", "Bocholt", "Zwickau"]
 
 gemeindeschluessel = {
     "Rüdersdorf bei Berlin": "12064428",
     "Strausberg": "12064472",
     "Erkner": "12067124",
     "Grünheide (Mark)": "12067201",
-    "Ingolstadt":"09161000",
+    "Ingolstadt": "09161000",
     "Kassel": "06611000",
     "Bocholt": "05554008",
     "Kiel": "01002000",
     "Zwickau": "14524330",
 }
-
 
 import pickle
 
@@ -36,15 +33,11 @@ with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
 # load dataset for Geo-data of Municipalities in germany
 gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
 
+"""
 center_positions = []
 for region in regions:
     center_positions.append(get_position(gdf,region))
-
-# create Dataframe df_ninja
-    # collects centerposition input data for renewables ninja
-data = { "centerposition": center_positions
-}
-df_ninja = pd.DataFrame(data, index=regions)
+"""
 
 # save centerpositions in dataframe as input data for renewables.ninja retrieval
 
@@ -56,21 +49,26 @@ for region, ags_id in gemeindeschluessel.items():
     ags_id_list.append(ags_id)
     regions.append(region)
 
-#"ags_id": ags_id_list,
-
+    # export positions as .csv
 data = { "ags_id": ags_id_list,
     "centerposition": positions
 }
 df_positions = pd.DataFrame(data)
-df_positions.to_csv("center_positions.csv", sep=";",index= False)
+df_positions.to_csv("center_positions.csv", sep=";", index= False)
+
+# create Dataframe df_ninja
+    # collects centerposition input data for renewables ninja
+data = {"centerposition": positions
+}
+df_ninja = pd.DataFrame(data, index=regions)
 
 # --------------------------------------------------------------------------------------------------------------------->
-
+#df_positions.loc[ags_id,"centerposition"].strip("()").split(", ")
 # --> collect data for wind_feedin_timeseries.csv
 
 for region in regions:
     df = get_df(change_wpt(
-    position=df_ninja.loc[region,"centerposition"][0].coords[0],
+    position=df_ninja.loc[region, "centerposition"],
     height=126,
     turbine="Enercon E126 6500")
     )
@@ -80,7 +78,7 @@ for region in regions:
 
 for region in regions:
     df = get_df_pv(change_wpt_pv(
-    position=df_ninja.loc[region,"centerposition"][0].coords[0],
+    position=df_ninja.loc[region, "centerposition"],
     system_loss=0.1)
     )
     save_as_csv_pv(df, region)
