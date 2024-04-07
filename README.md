@@ -256,12 +256,12 @@ Hier wird eine konstante Einspeisung angenommen.
 Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung
 
 ##### Vorgehen
-\- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert-
+\- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert <br>
 \- Für die Zeitreihe einer Gemeinde werden mehrere Zeitreihen erstellt, wobei der Azimut in einem 
-Bereich von 0° - 360° mit einer Schrittweite von 10° iteriert wird.
-\- Ost-West Panele: Azimut : [50° - 130°, 220° - 310°] -> Erträge * 0.95 wegen Bifaszilaität (\[1\] S.2)
-\- Süd Panele: Azimut : [0° - 40°, 320° - 360°] -> Bifaszilaität = 1 (\[1\] S.2)
-\- Nord Panele: Azimut: [140° - 210°] -> Erträge * 0.9 wegen Bifaszilaität (\[1\] S.2)
+Bereich von 0° - 360° mit einer Schrittweite von 10° iteriert wird. <br>
+\- Ost-West Panele: Azimut : [50° - 130°, 220° - 310°] -> Erträge * 0.95 wegen Bifaszilaität (\[1\] S.2)<br>
+\- Süd Panele: Azimut : [0° - 40°, 320° - 360°] -> Bifaszilaität = 1 (\[1\] S.2) <br>
+\- Nord Panele: Azimut: [140° - 210°] -> Erträge * 0.9 wegen Bifaszilaität (\[1\] S.2) <br>
 
 #### Quellen
 \[2\] Fraunhofer ISE (2023):Agri-Photovoltaik: Chance für Landwirtschaft und Energiewende, https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/APV-Leitfaden.pdf
