@@ -79,9 +79,6 @@ def change_anlage(position, system_loss, tilt, azim):
 
     args['lat'] = position[1]
     args['lon'] = position[0]
-#    args["lat"] = lat
-#    args["lon"] = lon
-#   args['capacity'] = capacity
     args['system_loss'] = system_loss
     args['tilt'] = tilt
     args['azim'] = azim

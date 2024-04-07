@@ -163,7 +163,7 @@ df = get_df(change_wpt(
 
 ## Freiflächen-Photovoltaik
 
-### PV-Anlage (2022)
+### PV-Anlage
 
 Für die Generierung der Zeitreihe über
 [renewables.ninja](http://renewables.ninja)
@@ -227,9 +227,6 @@ def get_df_pv(args):
     return df
 
 ```
-
-
-
 Als Position wird analog zur Windenergieanlage der räumlicher Mittelwert
 verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,01 % der
 Kapazität), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
@@ -243,6 +240,7 @@ Zukunftsszenarien verwendet.
 
 * Einspeisezeitreihe: `pv_feedin_timeseries.csv`
 
+
 ## Solarthermie
 
 * Einspeisezeitreihe: `st_feedin_timeseries.csv` (Kopie von PV-Einspeisezeitreihe)
@@ -252,3 +250,11 @@ Zukunftsszenarien verwendet.
 Hier wird eine konstante Einspeisung angenommen.
 
 * Einspeisezeitreihe: `ror_feedin_timeseries.csv`
+
+## Agrar-PV
+
+Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung
+
+##### Vorgehen
+\- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert-
+\- Für die Zeitreihe einer Gemeinde werden mehrere Zeitreihen erstellt wobei der Azimut 0° - 360° mit einer Schrittweite von 10° iteriert wird.
