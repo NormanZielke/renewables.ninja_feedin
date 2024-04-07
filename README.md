@@ -3,74 +3,64 @@
 Einspeisezeitreihen für Erneuerbare Energien, normiert auf 1 MW bzw. 1 p.u.
 Als Wetterjahr wird 2011 verwendet.
 
-### Wind- und  Solarenergie
-
 Stündlich aufgelöste Zeitreihe der Wind- und Solarenergie über 1 Jahr auf Basis von [renewables.ninja](http://renewables.ninja).
 Auflösung auf Gemeindeebene. Für beide Zeitreihen sind geografische Positionen erforderlich.
 
 #### Position
 
-Hierfür wird aus den Zentroiden der Gemeinden ein räumlicher Mittelwert
-anhand des Geodatensatzes "VG250". Dieser enthält Verwaltungsgrenzen der Gemeinden in Deutschland.
+Hierfür wird der Zentroiden der Gemeinden, ein räumlicher Mittelwert,
+anhand des Geodatensatzes "VG250" bestimmt. Dieser Geodatensatz enthält die Verwaltungsgrenzen der Gemeinden in Deutschland.
 [VG250](\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101)
-(`DE_VG250.gpkg`) gebildet:
+(`DE_VG250.gpkg`):
 
 ```
 import geopandas as gpd
-import os.path
 
-def get_position(gdf):
-    df = gpd.read_file(gdf)
-    points_of_muns = df["geometry"].centroid
-    points_of_muns_crs = points_of_muns.to_crs(4326)
-    point_df = [
-        points_of_muns_crs.y.sum()/len(points_of_muns),
-        points_of_muns_crs.x.sum()/len(points_of_muns)
-    ]
-    return point_df
-
-data_folder = os.path.join("your_data_folder")
-muns_gpkg = os.path.join(data_folder, "bkg_vg250_muns_region.gpkg")
-center_position = get_position(muns_gpkg)
+df = gpd.read_file(gdf)
+points_of_muns = df.loc[df.loc[df.GEN == region].index, "geometry"].head(1).centroid.values
+points_of_muns_crs = points_of_muns.to_crs(4326)
 ```
+
+## Windenergie
+
+Für renewables.ninja sind Position (lat, lon), Nennleistung (capacity),
+Nabenhöhe und Turbinentyp erforderlich.
+Das [MaSTr](https://www.marktstammdatenregister.de/MaStR) liefert den Datensatz [bnetza_mastr_wind_raw.csv](../bnetza_mastr_wind_raw.csv) für Nabenhöhe und Turbinentyp.
 
 #### Nennleistung
 
 Wird auf 1 MW gesetzt/normiert.
 
-#### Nabenhöhe
+#### Nabenhöhe, Turbinentyp
 
-Aus dem Datensatz
-[bnetza_mastr_wind_region](../../datasets/bnetza_mastr_wind_region/dataset.md)
+##### Nabenhöhe 
 
-(`bnetza_mastr_wind_agg_abw.gpkg`) wird ein Mittelwer von 100 m abgeleitet.
+Anhand des Datensatzes [bnetza_mastr_wind_raw.csv](../bnetza_mastr_wind_raw.csv),
+wird für die Nabenhöhe ein Mittelwert gebildet. 
 
 ```
-import geopandas as gpd
-
-df = gpd.read_file("bnetza_mastr_wind_agg_abw.gpkg")
-height = df[["hub_height"]].mean()
+df = pd.read_csv("bnetza_mastr_wind_raw.csv", sep=",")
+df.loc[:,"Nabenhoehe"].mean()
 ```
-
-#### Turbinentyp
+##### Turbinentyp
 
 Annahme: Innerhalb eines Herstellers sind Leistungskurven sehr ähnlich.
 Daher werden zwei größten Hersteller mit jeweiligen häufigsten Turbinentyp
-ausgewählt - diese sind Enercon und Vestas mit ca. 70 % und ca. 30%.
+ausgewählt. Die zwei größten Hersteller sind in diesem Fall Enercon und Vestas.
 
 ```
 import geopandas as gpd
 
-df = gpd.read_file("bnetza_mastr_wind_agg_abw.gpkg")
+df = pd.read_csv("bnetza_mastr_wind_raw.csv", sep=",")
 manufacturers = df[
     ["manufacturer_name", "status"]
 ].groupby("manufacturer_name").count().sort_values(
     by="status", ascending=False
 )
 ```
-
-Häufigste Turbinentypen sind *Enercon E-70* und *Vestas V80*. Daher werden
-*Enercon E70 2000* und *Vestas V80 2000* in renewables.ninja ausgewählt.
+Häufigste Turbinentypen sind "Enercon E70 2300" und "Vestas V90 2000".
+Um die Charakteristika der beiden o.g. Anlagentypen zu berücksichtigen, erfolgt
+eine gewichtete Summierung der Zeitreihen anhand der berechneten Häufigkeit.
 
 ```
 man_1 = manufacturers.index[0]
@@ -85,6 +75,16 @@ type_2 = df[
     ["manufacturer_name", "type_name", "status"]
 ].where(df["manufacturer_name"] == man_2).groupby(
     "type_name").count().sort_values(by="status", ascending=False)
+```
+
+Die o.g. Prozedur wird in der main_wind_pv_ror_2.py durchgeführt. 
+Analog zum oben beschriebenen Vorgehen wird zusätzlich eine seperate 
+Zuknunftszeitreihe für zukünftige WEA berechnet. Hierbei wird eine Enercon 
+E126 6500 mit einer Nabenhöhe von 159 m angenommen.
+Da die Zeitreihe sich nur marginal von der obigen Status-quo-Zeitreihe
+unterscheidet, wird letztere sowohl für den Status quo als auch die
+Zukunftsszenarien verwendet.(s. main_wind_pv_ror.py).
+
 ```
 
 ### Raw Data von [renewables.ninja](http://renewables.ninja) API
