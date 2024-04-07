@@ -9,7 +9,8 @@ Auflösung auf Gemeindeebene. Für beide Zeitreihen sind geografische Positionen
 #### Position
 
 Hierfür wird der Zentroid der Gemeinden, ein räumlicher Mittelwert,
-anhand des Geodatensatzes "VG250" bestimmt. Dieser Geodatensatz enthält die Verwaltungsgrenzen der Gemeinden in Deutschland.
+anhand des Geodatensatzes "VG250" bestimmt. Dieser Geodatensatz wird vom Bundesamt für Kartographie und Geodäsie bereitgestellt und
+enthält die Verwaltungsgrenzen der Gemeinden in Deutschland.
 [VG250](\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101)
 (`DE_VG250.gpkg`):
 
@@ -89,7 +90,7 @@ Zukunftsszenarien verwendet."(s. main_wind_pv_ror.py)".
 
 ### Raw Data von [renewables.ninja](http://renewables.ninja) API
 
-Es werden 9 Zeitreihen für die oben beschriebene Vergleichsanlage berechnet:
+Es wird jeweils eine Zeitreihe je Gemeinde für die oben beschriebene Vergleichsanlage berechnet:
 
 ```
 import json
@@ -150,15 +151,11 @@ def get_df(args):
     metadata = parsed_response['metadata']
     return df
 
-regions = ["Rüdersdorf bei Berlin","Strausberg","Erkner","Grünheide (Mark)","Ingolstadt","Kassel","Bocholt","Kiel","Zwickau"]
-
-for region in regions:
-    df = get_df(change_wpt(
-    position=df_ninja.loc[region, "centerposition"],
+df = get_df(change_wpt(
+    position=position,
     height=159,
     turbine="Enercon E126 6500")
     )
-    save_as_csv(df, region)
 
 ```
 
@@ -168,12 +165,6 @@ for region in regions:
 
 ### PV-Anlage (2022)
 
-Stündlich aufgelöste Zeitreihe der Photovoltaikeinspeisung über 1 Jahr auf Basis
-von [MaStR](../bnetza_mastr/dataset.md) und
-[renewables.ninja](http://renewables.ninja).
-Wie bei der Windeinspeisung wird auf eine Auflsöung auf Gemeindeebene aufgrund
-geringer regionaler Abweichungen verzichtet.
-
 Für die Generierung der Zeitreihe über
 [renewables.ninja](http://renewables.ninja)
 wird eine Position(lat, lon), Nennleistung (capacity), Verluste (system_loss)
@@ -181,12 +172,9 @@ Nachführung (tracking), Neigung (tilt) und der Azimutwinkel (azim) benötigt.
 
 Als Position wird analog zur Windenergieanlage der räumlicher Mittelwert
 verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,01 % der
-Kapazität), die Nachführung wird daher vernachlässigt. Die Neigung ist aus MaStR
-nicht bekannt, es dominieren jedoch Anlagen auf Freiflächen sowie Flachdächern
-im landwirtschaftlichen Kontext. Nach
+Kapazität), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
 [Ariadne Szenarienreport](https://ariadneprojekt.de/media/2022/02/Ariadne_Szenarienreport_Oktober2021_corr0222_lowres.pdf)
-wird diese mit 30° angenommen.
-Die Nennleistung Wird auf 1 MW gesetzt/normiert.
+mit 30° angenommen. Für den Azimutwinkel werden 180° angenommen. Die Nennleistung Wird auf 1 MW gesetzt/normiert.
 
 ### Zukunftsszenarien
 
