@@ -5,9 +5,7 @@ from functions.functions import get_position, save_as_csv, save_as_csv_pv
 from functions.renewables_ninja_feedin import change_wpt, get_df, change_wpt_pv, get_df_pv
 
 # --------------------------------------------------------------------------------------------------------------------->
-# INPUT - data
-
-# INPUT: choose regions by array
+# INPUT: dictionary with Municipalities and their Municipality key
 
 gemeindeschluessel = {
     "Rüdersdorf bei Berlin": "12064428",
@@ -33,12 +31,6 @@ with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
 # load dataset for Geo-data of Municipalities in germany
 gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
 
-"""
-center_positions = []
-for region in regions:
-    center_positions.append(get_position(gdf,region))
-"""
-
 # save centerpositions in dataframe as input data for renewables.ninja retrieval
 
 positions = []
@@ -50,8 +42,8 @@ for region, ags_id in gemeindeschluessel.items():
     regions.append(region)
 
     # export positions as .csv
-data = { "ags_id": ags_id_list,
-    "centerposition": positions
+data = {"ags_id": ags_id_list,
+        "centerposition": positions
 }
 df_positions = pd.DataFrame(data)
 df_positions.to_csv("center_positions.csv", sep=";", index= False)
@@ -63,7 +55,8 @@ data = {"centerposition": positions
 df_ninja = pd.DataFrame(data, index=regions)
 
 # --------------------------------------------------------------------------------------------------------------------->
-#df_positions.loc[ags_id,"centerposition"].strip("()").split(", ")
+# Download timeseries from renewables.ninja
+
 # --> collect data for wind_feedin_timeseries.csv
 
 for region in regions:
@@ -84,8 +77,7 @@ for region in regions:
     save_as_csv_pv(df, region)
 
 # --------------------------------------------------------------------------------------------------------------------->
-
-# summarize data to one dataframe
+# Summarize data to one dataframe
 
 dfs = []
 for region in regions:
@@ -102,19 +94,18 @@ for region in regions:
 timeseries_pv = pd.concat(dfs, axis=1)
 
 # --------------------------------------------------------------------------------------------------------------------->
-
-# calculate normed timeseries for wind and pv
+# Calculate normed timeseries for wind and pv
 
 # full load  hours
 full_load_hours_wind = timeseries_wind.sum()/1000
 full_load_hours_pv = timeseries_pv.sum()/1000
 
-# standardize on installed capacity
+# standardize timeseries
 timeseries_wind_normed = timeseries_wind/timeseries_wind.sum()
 timeseries_pv_normed = timeseries_pv/timeseries_pv.sum()
 
 # --------------------------------------------------------------------------------------------------------------------->
-
+# ROR
 # --> collect data for ror_feedin_timeseries.csv
 """
 Assumptions:
@@ -136,9 +127,8 @@ data = {"power": np.full(len(date_range),ror_dispatch_normed)
 timeseries_ror_normed = pd.DataFrame(data,index=date_range)
 
 # --------------------------------------------------------------------------------------------------------------------->
+# Export data as .csv
 
-# export data as .csv
-# timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/pv_feedin_timeseries.csv")
 timeseries_pv_normed.to_csv("timeseries/st_feedin_timeseries.csv")
 timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")

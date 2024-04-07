@@ -1,28 +1,19 @@
 # EE-Einspeisezeitreihen
 
 Einspeisezeitreihen für Erneuerbare Energien, normiert auf 1 MW bzw. 1 p.u.
-Als Wetterjahr wird 2011 verwendet, siehe
-[Szenarien](../../../../docs/sections/scenarios.md).
+Als Wetterjahr wird 2011 verwendet.
 
-## Windenergie
+### Wind- und  Solarenergie
 
-Stündlich aufgelöste Zeitreihe der Windenergie Einspeisung über 1 Jahr auf Basis
-von [MaStR](../bnetza_mastr/dataset.md) und
-[renewables.ninja](http://renewables.ninja).
-Auf einen Auflösung auf Gemeindeebene wird verzichtet, da die Differenz der
-Produktion der Gemeinden nach renewables.ninja <5 % beträgt.
-
-### Windenergieanlage (2022)
-
-Für renewables.ninja sind Position (lat, lon), Nennleistung (capacity),
-Nabenhöhe und Turbinentyp erforderlich.
+Stündlich aufgelöste Zeitreihe der Wind- und Solarenergie über 1 Jahr auf Basis von [renewables.ninja](http://renewables.ninja).
+Auflösung auf Gemeindeebene. Für beide Zeitreihen sind geografische Positionen erforderlich.
 
 #### Position
 
 Hierfür wird aus den Zentroiden der Gemeinden ein räumlicher Mittelwert
-anhand des Datensatzes
-[bkg_vg250_muns_region](../../datasets/bkg_vg250_muns_region/dataset.md)
-(`bkg_vg250_muns_region.gpkg`) gebildet:
+anhand des Geodatensatzes "VG250". Dieser enthält Verwaltungsgrenzen der Gemeinden in Deutschland.
+[VG250](\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101)
+(`DE_VG250.gpkg`) gebildet:
 
 ```
 import geopandas as gpd
