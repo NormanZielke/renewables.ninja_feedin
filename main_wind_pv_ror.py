@@ -62,7 +62,7 @@ df_ninja = pd.DataFrame(data, index=regions)
 for region in regions:
     df = get_df(change_wpt(
     position=df_ninja.loc[region, "centerposition"],
-    height=126,
+    height=159,
     turbine="Enercon E126 6500")
     )
     save_as_csv(df, region)
