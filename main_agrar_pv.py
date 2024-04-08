@@ -24,10 +24,10 @@ df_positions.insert(0, "region", gemeindeschluessel.keys())
 # cut out this line of code, if you choose your own regions and summary of regions is not necessary
 df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
 
-#ags_id_list = df_positions.index
-#regions = df_positions.loc[:, "region"].values
-ags_id_list = df_positions.index[:2]
-regions = df_positions.loc[:, "region"].values[:2]
+ags_id_list = df_positions.index
+regions = df_positions.loc[:, "region"].values
+#ags_id_list = df_positions.index[:2]
+#regions = df_positions.loc[:, "region"].values[:2]
 
 
 def get_pv_data(args):

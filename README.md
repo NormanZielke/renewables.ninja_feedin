@@ -231,7 +231,7 @@ Als Position wird analog zur Windenergieanlage der räumlicher Mittelwert
 verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,01 % der
 Kapazität), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
 [Ariadne Szenarienreport](https://ariadneprojekt.de/media/2022/02/Ariadne_Szenarienreport_Oktober2021_corr0222_lowres.pdf)
-mit 30° angenommen. Für den Azimutwinkel werden 180° angenommen. Die Nennleistung Wird auf 1 MW gesetzt/normiert.
+mit 30° angenommen. Für den Azimutwinkel wird eine Südausrichtung, d.h. 0° angenommen. Die Nennleistung Wird auf 1 MW gesetzt/normiert.
 
 ### Zukunftsszenarien
 
