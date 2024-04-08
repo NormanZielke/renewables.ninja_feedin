@@ -253,7 +253,9 @@ Hier wird eine konstante Einspeisung angenommen.
 
 ## Agrar-PV
 
-Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung
+Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br>
+Die vier Gemeinden in Brandenburg werden zusammengefasst. D.h. für diese Regionen gibt es eine Zeitreihe,
+da die Differenz der Produktion der Gemeinden nach renewables.ninja <5 % beträgt.
 
 ##### Vorgehen
 \- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert <br>

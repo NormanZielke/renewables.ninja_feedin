@@ -103,7 +103,7 @@ def bifazial(ags_id):
 
 
     for i in range(1,36):
-        time.sleep(1)
+
         if 0 < i < 5 or 31 < i < 36: #südausrichtung, also bifaszialität 1
             bifaszialitaet = 1
         elif 4 < i < 14 or 21 < i < 32: # west- und ostausrichtung, also bifaszialität 0,95
@@ -127,6 +127,8 @@ def save_as_csv_agrar_pv(df, region):
 
 #df_agrar_pv = bifazial(ags_id_list[0])
 
+# --------------------------------------------------------------------------------------------------------------------->
+
 """
 request agrar_pv timeseries for all regions
     - 36 requests per region
@@ -138,5 +140,27 @@ for region, ags_id in zip(regions, ags_id_list):
     save_as_csv_agrar_pv(df_agrar_pv, region)
     time.sleep(3600)
 
-#save_as_csv_agrar_pv(df_agrar_pv, region)
 
+# --------------------------------------------------------------------------------------------------------------------->
+# Summarize data to one dataframe
+
+dfs = []
+for region in regions:
+    dfs.append(pd.read_csv(f"timeseries/agrar_pv/timeseries_agrar_pv_{region}.csv",
+                 parse_dates=True, index_col=0))
+
+timeseries_agrar_pv = pd.concat(dfs, axis=1)
+
+# --------------------------------------------------------------------------------------------------------------------->
+# Calculate normed timeseries for agrar_pv
+
+# full load  hours
+full_load_agrar_pv = timeseries_agrar_pv.sum()/1000
+
+# standardize timeseries
+timeseries_agrar_pv_normed = timeseries_agrar_pv/timeseries_agrar_pv.sum()
+
+# --------------------------------------------------------------------------------------------------------------------->
+# Export data as .csv
+
+timeseries_agrar_pv_normed.to_csv("timeseries/agrar_pv_feedin_timeseries.csv")
