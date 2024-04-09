@@ -230,7 +230,7 @@ def get_df_pv(args):
 
 ```
 Als Position wird analog zur Windenergieanlage der räumlicher Mittelwert
-verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,08 % aller Anlagen), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
+verwendet. Laut MaStR werden lediglich 19 Anlagen nachgeführt (0,01 % aller Anlagen, Stand 08.01.2024), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
 [Ariadne Szenarienreport](https://ariadneprojekt.de/media/2022/02/Ariadne_Szenarienreport_Oktober2021_corr0222_lowres.pdf)
 mit 30° angenommen. Für den Azimutwinkel wird eine Südausrichtung, d.h. 0° angenommen. Die Nennleistung Wird auf 1 MW gesetzt/normiert.
 
