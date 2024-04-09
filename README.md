@@ -25,9 +25,9 @@ points_of_muns_crs = points_of_muns.to_crs(4326)
 ## Windenergie
 
 Für renewables.ninja sind Position (lat, lon), Nennleistung (capacity),
-Nabenhöhe und Turbinentyp erforderlich. Das Python-Paket Open-mastr ~\cite{Open-mastr}  stellt den erforderlichen Datensatz aller installierten Windkraftanlagen 
-in Deutschland bereit. Open-mastr  bietet eine Schnittstelle zum Herunterladen und Verarbeiten des Markstammdatenregisters [MaSTr].
-Das [MaSTr](https://www.marktstammdatenregister.de/MaStR) liefert den Datensatz [bnetza_mastr_wind_raw.csv](../bnetza_mastr_wind_raw.csv) für Nabenhöhe und Turbinentyp.
+Nabenhöhe und Turbinentyp erforderlich. Das Python-Paket Open-mastr stellt den erforderlichen Datensatz aller installierten Windkraftanlagen 
+in Deutschland bereit. Open-mastr  bietet eine Schnittstelle zum Herunterladen und Verarbeiten des Markstammdatenregisters [MaSTR].
+Das [MaSTR](https://www.marktstammdatenregister.de/MaStR) liefert den Datensatz [bnetza_mastr_wind_raw.csv](../bnetza_mastr_wind_raw.csv) für Nabenhöhe und Turbinentyp.
 
 
 #### Nennleistung
