@@ -25,8 +25,10 @@ points_of_muns_crs = points_of_muns.to_crs(4326)
 ## Windenergie
 
 Für renewables.ninja sind Position (lat, lon), Nennleistung (capacity),
-Nabenhöhe und Turbinentyp erforderlich.
+Nabenhöhe und Turbinentyp erforderlich. Das Python-Paket Open-mastr ~\cite{Open-mastr}  stellt den erforderlichen Datensatz aller installierten Windkraftanlagen 
+in Deutschland bereit. Open-mastr  bietet eine Schnittstelle zum Herunterladen und Verarbeiten des Markstammdatenregisters [MaSTr].
 Das [MaSTr](https://www.marktstammdatenregister.de/MaStR) liefert den Datensatz [bnetza_mastr_wind_raw.csv](../bnetza_mastr_wind_raw.csv) für Nabenhöhe und Turbinentyp.
+
 
 #### Nennleistung
 
@@ -228,8 +230,7 @@ def get_df_pv(args):
 
 ```
 Als Position wird analog zur Windenergieanlage der räumlicher Mittelwert
-verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,01 % der
-Kapazität), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
+verwendet. Laut MaStR werden lediglich 13 Anlagen nachgeführt (0,08 % aller Anlagen), die Nachführung wird daher vernachlässigt. Die Neigung wird nach 
 [Ariadne Szenarienreport](https://ariadneprojekt.de/media/2022/02/Ariadne_Szenarienreport_Oktober2021_corr0222_lowres.pdf)
 mit 30° angenommen. Für den Azimutwinkel wird eine Südausrichtung, d.h. 0° angenommen. Die Nennleistung Wird auf 1 MW gesetzt/normiert.
 
@@ -253,9 +254,7 @@ Hier wird eine konstante Einspeisung angenommen.
 
 ## Agrar-PV
 
-Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br>
-Die vier Gemeinden in Brandenburg werden zusammengefasst. D.h. für diese Regionen gibt es eine Zeitreihe,
-da die Differenz der Produktion der Gemeinden nach renewables.ninja <5 % beträgt.
+Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br
 
 ##### Vorgehen
 \- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert <br>
@@ -363,3 +362,6 @@ df_agrar_pv = bifazial(ags_id)
 ```
 
 * Einspeisezeitreihe: `agrar_pv_feedin_timeseries.csv`
+
+
+Hey @Marie, hey @Jonathan. Für die Energiesystemmodellierung habe ich angefangen, mit digipipe zu arbeiten. Ich bin der Dokumentation hier gefolgt: https://digipipe.readthedocs.io/de/stable/docs/sections/esys_dev/. Ich bekomme 

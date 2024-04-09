@@ -103,7 +103,7 @@ def bifazial(ags_id):
 
 
     for i in range(1,36):
-
+        time.sleep(1)
         if 0 < i < 5 or 31 < i < 36: #südausrichtung, also bifaszialität 1
             bifaszialitaet = 1
         elif 4 < i < 14 or 21 < i < 32: # west- und ostausrichtung, also bifaszialität 0,95
