@@ -362,6 +362,3 @@ df_agrar_pv = bifazial(ags_id)
 ```
 
 * Einspeisezeitreihe: `agrar_pv_feedin_timeseries.csv`
-
-
-Hey @Marie, hey @Jonathan. Für die Energiesystemmodellierung habe ich angefangen, mit digipipe zu arbeiten. Ich bin der Dokumentation hier gefolgt: https://digipipe.readthedocs.io/de/stable/docs/sections/esys_dev/. Ich bekomme 
