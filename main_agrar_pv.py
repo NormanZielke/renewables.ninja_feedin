@@ -22,7 +22,7 @@ df_positions.insert(0, "region", gemeindeschluessel.keys())
 
 # in SLE-Project, for regions in Brandenburg, choose one timeseries because they differ only marginally
 # cut out this line of code, if you choose your own regions and summary of regions is not necessary
-df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
+# df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
 
 ags_id_list = df_positions.index
 regions = df_positions.loc[:, "region"].values
@@ -104,7 +104,7 @@ def bifazial(ags_id):
 
     for i in range(1,36):
         time.sleep(1)
-        if 0 < i < 5 or 31 < i < 36: #südausrichtung, also bifaszialität 1
+        if 0 < i < 5 or 31 < i < 36: # südausrichtung, also bifaszialität 1
             bifaszialitaet = 1
         elif 4 < i < 14 or 21 < i < 32: # west- und ostausrichtung, also bifaszialität 0,95
             bifaszialitaet = 0.95

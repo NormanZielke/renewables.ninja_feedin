@@ -86,7 +86,7 @@ Zuknunftszeitreihe für zukünftige WEA berechnet.
 Hierbei wird eine Enercon E126 6500 mit einer Nabenhöhe von 159 m angenommen.
 ([PV- und Windflächenrechner](https://zenodo.org/record/6794558))
 Da die Zeitreihe sich nur marginal von der obigen Status-quo-Zeitreihe
-unterscheidet, wird letztere sowohl für den Status quo als auch die
+unterscheidet, wird letztere sowohl für den Status quo als auch für die
 Zukunftsszenarien verwendet."(s. main_wind_pv_ror.py)".
 
 
@@ -254,18 +254,19 @@ Hier wird eine konstante Einspeisung angenommen.
 
 ## Agrar-PV
 
-Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br
+Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br>
 
 ##### Vorgehen
 \- analog zum o.g. Vorgehen für PV-Anlagen wird der Input der Renewables ninja API um Azimut und Neigungswinkel = 90° erweitert <br>
 \- Für die Zeitreihe einer Gemeinde werden mehrere Zeitreihen erstellt, wobei der Azimut in einem 
-Bereich von 0° - 360° mit einer Schrittweite von 10° iteriert wird. <br>
+Bereich von 0° - 360° mit einer Schrittweite von 10° iteriert wird, und im Anschluss auf eine Zeitreihe gemittelt wird. <br>
 \- Ost-West Panele: Azimut : [50° - 130°, 220° - 310°] -> Erträge * 0.95 wegen Bifaszilaität (\[1\] S.2)<br>
 \- Süd Panele: Azimut : [0° - 40°, 320° - 360°] -> Bifaszilaität = 1 (\[1\] S.2) <br>
 \- Nord Panele: Azimut: [140° - 210°] -> Erträge * 0.9 wegen Bifaszilaität (\[1\] S.2) <br>
 
 #### Quellen
-\[2\] Fraunhofer ISE (2023):Agri-Photovoltaik: Chance für Landwirtschaft und Energiewende, https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/APV-Leitfaden.pdf
+\[1\][Smart Energy](https://pdf.sciencedirectassets.com/778369/1-s2.0-S2666955222X00038/1-s2.0-S2666955222000211/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGkaCXVzLWVhc3QtMSJGMEQCIFEeRGT6INQhOEb3rhnbL9hryWaJgJzP89Csj4pkXwIWAiAXC8iI4IeMsNsTNJ57m619DO6ua4GcbM0TXi5%2BcxKbviq8BQii%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAUaDDA1OTAwMzU0Njg2NSIMu9qF92sZRxE5ORF%2BKpAFyyQ354hh8XCE2QoydL1AzB9cs0alMC9ZNEIvOb14n1ASh922RVodhxVRz%2FWjers84PFyU%2BhaZ%2BZwApbstD3HPmaey1PBWmTH2FAWsHMBMs3cQFOSgr3IztaGSi5dmfHpBNLyDRlE1tgoq7U03syo%2BKwXpuf1OgMRzqwS5JsqySufG4zDetbIWuBwNEgPbRYBAhDv%2FRAKqlBx49kZQX9hS2GNfUnJGXDg7T50leh1HCDGOzoYPPhCOy2JgZhAl%2BFKcJZZl9QUzGD6NOJaI2oDMj9ITs3AK2DtZ2zg9mRQfYJpvcokwY95OVE%2Biif5cqRQMa%2FyV0OFadNKzfCP2nlcqqN4QqqEFIdtZ6s05asFOiS06r0nQgNqpYt6e%2BB7lSD6BYDaH6ZDvrEWrzxG2SlQpqGXw9tVcFzMfxMDqw9DNwfjCr7hQdwJ8FN%2BR2N6W1fit%2FoFd9a9FRTwwHQHphG2mfdfMCOHYECvK3Kpy7u%2B47vNo2w1n3sTK%2BcRgOurTPFAz8YR%2BY3Sq83fjHnIpeMWUha6kMGauxaNTLj2pY8XfoyuznZjnksIdcUhRDP8rUItUsoGOY3m%2FGwdfO4kjAM2fkiDbu%2Bcm%2FEikOM4db%2F8dTF8pF7is%2FmjDaPrZbJj1j06kAUSptQuojG2ajFoETiTERavkDhDr1QfCKwNwmS%2BXRRdPH%2Ff%2FdAv%2FdBLR31Ssp9Q4anfAIXwgx38ck8FqlscOdWkRMkDq%2F2y%2Bkm21Ucahanagb64%2F2biVTjaU1cQmpSyzvNv08i6OY%2FoJyNe2syfWDi80OFjdpx1xbW7uFST3xdi%2BCLWoVN5t0xeO7VKm2mtb9zj73Jtewo5VGeJBr0v0zT8eRiR9W%2FKn7s5Gn9VBoUws9jzsAY6sgF%2Bu1qHiK4ClksXjT%2BSZPWH5eH%2FApNkHYbzYteaTFJiSdgvPPgyBcMS2ocrohTVZqVWKi5ijKGYnIXKFrOn1En9ZMRu02MPt5w52Zcr8pPn43aeIYCP2Ep7Ua9%2BGAuXXcKB%2FwX84CfvTyuJU8wyBnGF4XmouQm0W1FamFJgESSpCe6Z5jF8n%2BDOFIdRUdAVtPyhfG2l31ZfIqavQpQYTiFhXZZ5SPlxD%2BPNw%2BYIP2E5q4v%2B&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240415T100956Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYYT46DZJF%2F20240415%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=e38b250acebf290e5845a2dac6f00f1b79085fb28ec06d47971b9fad2c3a1abe&hash=4e1be39aae7d9e0b72209e591a50e2a82bb5f7555e671fd1793573a181e633df&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S2666955222000211&tid=spdf-9b17c252-883d-47ea-ade3-83c9adc29e04&sid=f50cf85792e1824f06999d294cff8e235b24gxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=020758515b0c5353560f&rr=874b249a6d8e58de&cc=de)
+
 
 ```
 def change_anlage(position, system_loss, tilt, azim):
