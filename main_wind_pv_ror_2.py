@@ -211,8 +211,8 @@ import requests
 # function to change input values for get_df() - function
 def change_wpt(position, height, turbine):
     args = {
-        'lat': 51.8000,  # 51.5000-52.0000
-        'lon': 12.2000,  # 11.8000-13.1500
+        'lat': 51.8000,
+        'lon': 12.2000,
         'date_from': '2011-01-01',
         'date_to': '2011-12-31',
         'capacity': 1000.0,
