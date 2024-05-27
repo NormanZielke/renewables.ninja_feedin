@@ -1,6 +1,9 @@
+import sys
+import os
 import pandas as pd
 import numpy as np
 # import functions
+
 from functions.functions import get_position, save_as_csv, save_as_csv_pv
 from functions.renewables_ninja_feedin import change_wpt, get_df, change_wpt_pv, get_df_pv
 
@@ -29,7 +32,10 @@ with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
 # CENTER - POSITIONS
 
 # load dataset for Geo-data of Municipalities in germany
-gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
+# Windows
+# gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
+# Linux
+gdf ="/home/norman/RLI/360_Stadt-Land-Energie/03-Projektinhalte/AP2/vg250_01-01.utm32s.gpkg.ebenen/vg250_01-01.utm32s.gpkg.ebenen/vg250_ebenen_0101/DE_VG250.gpkg"
 
 # save centerpositions in dataframe as input data for renewables.ninja retrieval
 
