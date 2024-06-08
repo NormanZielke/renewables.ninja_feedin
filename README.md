@@ -166,7 +166,7 @@ df = get_df(change_wpt(
 ## Freiflächen-Photovoltaik
 
 ### PV-Anlage
-
+(s. main_wind_pv_ror.py)
 Für die Generierung der Zeitreihe über
 [renewables.ninja](http://renewables.ninja)
 wird eine Position(lat, lon), Nennleistung (capacity), Verluste (system_loss)
@@ -243,17 +243,17 @@ Zukunftsszenarien verwendet.
 
 
 ## Solarthermie
-
+(s. main_wind_pv_ror.py)
 * Einspeisezeitreihe: `st_feedin_timeseries.csv` (Kopie von PV-Einspeisezeitreihe)
 
 ## Laufwasserkraft
-
+(s. main_wind_pv_ror.py)
 Hier wird eine konstante Einspeisung angenommen.
 
 * Einspeisezeitreihe: `ror_feedin_timeseries.csv`
 
 ## Agrar-PV
-
+(s. main_agrar_pv.py)
 Bifaziale vertikale aufgeständerte PV Anlagen in Kombination mit landwirtschaftlicher Nutzung. <br>
 
 ##### Vorgehen
