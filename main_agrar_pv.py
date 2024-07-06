@@ -11,7 +11,7 @@ considered in SLE-Project
 # get dict "gemeindeschluessel"
 import pickle
 
-with open("gemeindeschluessel.pkl", "rb") as datei:
+with open("functions/gemeindeschluessel.pkl", "rb") as datei:
     gemeindeschluessel = pickle.load(datei)
 
 # read in calculated centerpositions
@@ -20,7 +20,7 @@ df_positions = pd.read_csv("center_positions.csv",
 
 df_positions.insert(0, "region", gemeindeschluessel.keys())
 
-# in SLE-Project, for regions in Brandenburg, choose one timeseries because they differ only marginally
+
 # cut out this line of code, if you choose your own regions and summary of regions is not necessary
 # df_positions = pd.concat([df_positions.iloc[[0]], df_positions.iloc[-5:]])
 
@@ -73,7 +73,7 @@ def change_anlage(position, system_loss, tilt, azim):
         'tilt': 30,
         'azim': 180,
         'format': 'json',
-        'local_time': 'true',
+        'local_time': 'false',
         'raw': 'false'
     }
 

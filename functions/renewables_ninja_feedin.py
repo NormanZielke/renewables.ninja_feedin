@@ -36,7 +36,7 @@ def change_wpt(position, height, turbine):
         'height': 100,
         'turbine': 'Vestas V164 7000',
         'format': 'json',
-        'local_time': 'true',
+        'local_time': 'false',
         'raw': 'false',
     }
 
@@ -96,7 +96,7 @@ def change_wpt_pv(position, system_loss):
         'tilt': 30,
         'azim': 0,
         'format': 'json',
-        'local_time': 'true',
+        'local_time': 'false',
         'raw': 'false',
     }
 

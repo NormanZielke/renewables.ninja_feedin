@@ -23,9 +23,15 @@ gemeindeschluessel = {
 }
 
 import pickle
-
+'''
+# Windows 
 # dict gemeindeschluessel save as file
 with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
+    pickle.dump(gemeindeschluessel, datei)
+'''
+# Linux
+# dict gemeindeschluessel save as file
+with open("functions/gemeindeschluessel.pkl", "wb") as datei:
     pickle.dump(gemeindeschluessel, datei)
 
 # --------------------------------------------------------------------------------------------------------------------->
@@ -35,7 +41,7 @@ with open(r"functions\gemeindeschluessel.pkl", "wb") as datei:
 # Windows
 # gdf =r"\\FS01\RL-Institut\04_Projekte\360_Stadt-Land-Energie\03-Projektinhalte\AP2\vg250_01-01.utm32s.gpkg.ebenen\vg250_01-01.utm32s.gpkg.ebenen\vg250_ebenen_0101\DE_VG250.gpkg"
 # Linux
-gdf ="/home/norman/RLI/360_Stadt-Land-Energie/03-Projektinhalte/AP2/vg250_01-01.utm32s.gpkg.ebenen/vg250_01-01.utm32s.gpkg.ebenen/vg250_ebenen_0101/DE_VG250.gpkg"
+gdf ="/home/norman/RLI_Mounts/360_Stadt-Land-Energie/03-Projektinhalte/AP2/vg250_01-01.utm32s.gpkg.ebenen/vg250_01-01.utm32s.gpkg.ebenen/vg250_ebenen_0101/DE_VG250.gpkg"
 
 # save centerpositions in dataframe as input data for renewables.ninja retrieval
 
@@ -128,14 +134,14 @@ start_date = "2011-01-01 00:00:00"
 end_date = "2011-12-31 23:00:00"
 date_range = pd.date_range(start=start_date, end=end_date, freq='H')
 
-data = {"power": np.full(len(date_range),ror_dispatch_normed)
+data = {"power": np.full(len(date_range), ror_dispatch_normed)
 }
-timeseries_ror_normed = pd.DataFrame(data,index=date_range)
+timeseries_ror_normed = pd.DataFrame(data, index=date_range)
 
 # --------------------------------------------------------------------------------------------------------------------->
 # Export data as .csv
 
-timeseries_pv_normed.to_csv("timeseries/pv_feedin_timeseries.csv")
-timeseries_pv_normed.to_csv("timeseries/st_feedin_timeseries.csv")
-timeseries_wind_normed.to_csv("timeseries/wind_feedin_timeseries.csv")
-timeseries_ror_normed.to_csv("timeseries/ror_feedin_timeseries.csv")
+timeseries_pv_normed.to_csv("timeseries/feedin_timeseries/pv_feedin_timeseries.csv")
+timeseries_pv_normed.to_csv("timeseries/feedin_timeseries/st_feedin_timeseries.csv")
+timeseries_wind_normed.to_csv("timeseries/feedin_timeseries/wind_feedin_timeseries.csv")
+timeseries_ror_normed.to_csv("timeseries/feedin_timeseries/ror_feedin_timeseries.csv")

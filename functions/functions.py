@@ -29,7 +29,7 @@ def save_as_csv(df, region):
 
     df.rename(columns={"electricity": gemeindeschluessel[region]}, inplace=True)
     filename = f"timeseries_wind_{region}.csv"
-    df.to_csv(f"timeseries/wind/{filename}", index=False)
+    df.to_csv(f"timeseries/wind/{filename}")
 
 def save_as_csv_pv(df, region):
     """
