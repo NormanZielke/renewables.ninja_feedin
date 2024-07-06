@@ -14,7 +14,7 @@
         },
         {
             "name": "generation time series",
-            "path": "https://openenergyplatform.org/ontology/oeo/OEO_00000150"
+            "path": "https://openenergyplatform.org/ontology/oeo/OEO_00000150",
         },
         {
             "name": "yield profile",
@@ -29,14 +29,14 @@
     ],
     "publicationDate": "2024-06-26",
     "context": {
-        "homepage": "https://www.renewables.ninja/", #-> SLE homepage?
+        "homepage": "https://www.renewables.ninja/",
         "documentation": "https://github.com/NormanZielke/renewables.ninja_feedin",
         "sourceCode": "https://github.com/NormanZielke/renewables.ninja_feedin",
         "contact": "Norman.Zielke@rl-institut.de",
         "grantNo": null,
-       # "fundingAgency": "Deutscher Städte- und Gemeindebund",
-       # "fundingAgencyLogo": "https://www.dstgb.de/",
-       # "publisherLogo": "https://reiner-lemoine-institut.de//wp-content/uploads/2015/09/rlilogo.png"
+        "fundingAgency": "Deutscher Städte- und Gemeindebund",
+        "fundingAgencyLogo": "https://www.dstgb.de/",
+        "publisherLogo": "https://reiner-lemoine-institut.de//wp-content/uploads/2015/09/rlilogo.png"
     },
     "spatial": {
         "location": null,
@@ -705,160 +705,8 @@
             "schema": {
                 "fields": [
                     {
-                        "name": "12064428",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "12064472",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "12067124",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "12067201",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "09161000",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "06611000",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "05554008",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "01002000",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
-                        "type": "double precision",
-                        "unit": null,
-                        "isAbout": [
-                            {
-                                "name": "yield profile",
-                                "path": "https://openenergyplatform.org/ontology/oeo/OEO_00140139"
-                            }
-                        ],
-                        "valueReference": [
-                            {
-                                "value": null,
-                                "name": null,
-                                "path": null
-                            }
-                        ]
-                    },
-                    {
-                        "name": "14524330",
-                        "description": "value of normed generated electrical amount of energy in the  Municipality with the Municipality - id",
+                        "name": "power",
+                        "description": "value of normed generated electrical amount of energy in the  Municipalities",
                         "type": "double precision",
                         "unit": null,
                         "isAbout": [
