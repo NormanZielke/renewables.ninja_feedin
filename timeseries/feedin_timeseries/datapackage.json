@@ -29,7 +29,7 @@
     ],
     "publicationDate": "2024-06-26",
     "context": {
-        "homepage": "https://www.renewables.ninja/",
+        "homepage": "https://github.com/stadt-land-energie-projekt",
         "documentation": "https://github.com/NormanZielke/renewables.ninja_feedin",
         "sourceCode": "https://github.com/NormanZielke/renewables.ninja_feedin",
         "contact": "Norman.Zielke@rl-institut.de",
@@ -44,7 +44,7 @@
         "resolution": "Municipality"
     },
     "temporal": {
-        "referenceDate": "2011-01-01" #nur jahr oder 01.01?#,
+        "referenceDate": "2011-01-01",
         "timeseries": [
             {
                 "start": "2011-01-01T00:00+01",
@@ -65,7 +65,7 @@
                     "name": "CC BY-NC 4.0",
                     "title": "Creative Commons Attribution-NonCommercial 4.0 International",
                     "path": "https://creativecommons.org/licenses/by-nc/4.0/",
-                    "instruction": "You are free: To Share, To Adapt; As long as you follow the license terms", #(genug?)
+                    "instruction": "You are free: To Share, To Adapt; As long as you follow the license terms",
                     "attribution": "© Reiner Lemoine Institut"
                 }
             ]
@@ -76,7 +76,7 @@
             "name": "CC BY-NC 4.0",
             "title": "Creative Commons Attribution-NonCommercial 4.0 International",
             "path": "https://creativecommons.org/licenses/by-nc/4.0/",
-            "instruction": "The licensor cannot revoke these freedoms as long as you follow the license terms. ",
+            "instruction": "You must give appropriate credit , provide a link to the license, and indicate if changes were made . You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. You may not use the material for commercial purposes . ",
             "attribution": "© Reiner Lemoine Institut"
         }
     ],
@@ -706,7 +706,7 @@
                 "fields": [
                     {
                         "name": "power",
-                        "description": "value of normed generated electrical amount of energy in the  Municipalities",
+                        "description": "value of normed generated electrical amount of energy in the Municipalities",
                         "type": "double precision",
                         "unit": null,
                         "isAbout": [

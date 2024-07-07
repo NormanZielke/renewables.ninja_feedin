@@ -140,7 +140,6 @@ for region, ags_id in zip(regions, ags_id_list):
     save_as_csv_agrar_pv(df_agrar_pv, region)
     time.sleep(3600)
 
-
 # --------------------------------------------------------------------------------------------------------------------->
 # Summarize data to one dataframe
 
