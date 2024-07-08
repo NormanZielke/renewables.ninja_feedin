@@ -44,7 +44,7 @@
         "resolution": "Municipality"
     },
     "temporal": {
-        "referenceDate": "2011-01-01",
+        "referenceDate": "2011",
         "timeseries": [
             {
                 "start": "2011-01-01T00:00+01",
